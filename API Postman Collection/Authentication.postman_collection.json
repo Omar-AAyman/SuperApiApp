@@ -1,0 +1,177 @@
+{
+	"info": {
+		"_postman_id": "54f34692-98a1-4955-92bc-3adf9062b8e8",
+		"name": "Authentication",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21260297"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/vnd.api+json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/vnd.api+json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "omaraymn411@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "43494955_oG",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/login",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"login"
+					]
+				},
+				"description": "### Login API\n\nThis API endpoint is used to authenticate users and generate a token for further access to protected resources.\n\n#### Request Body\n\n- email (text): The email address of the user.\n    \n- password (text): The password for the user's account.\n    \n\n#### Response\n\nThe response is a JSON object with the following properties:\n\n- status (string): The status of the response.\n    \n- message (string): A message related to the response, if any.\n    \n- data (object): The data object containing user information and token.\n    \n    - user (object): An object containing user details.\n        \n        - id (number): The unique identifier of the user.\n            \n        - first_name (string): The first name of the user.\n            \n        - last_name (string): The last name of the user.\n            \n        - email (string): The email address of the user.\n            \n        - email_verified_at (string): The date and time when the user's email was verified.\n            \n        - created_at (string): The date and time when the user account was created.\n            \n        - updated_at (string): The date and time when the user account was last updated.\n            \n    - token (string): The authentication token generated for the user.\n        \n\n#### JSON Schema for Response\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"status\": { \"type\": \"string\" },\n    \"message\": { \"type\": \"string\" },\n    \"data\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"user\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"id\": { \"type\": \"number\" },\n            \"first_name\": { \"type\": \"string\" },\n            \"last_name\": { \"type\": \"string\" },\n            \"email\": { \"type\": \"string\" },\n            \"email_verified_at\": { \"type\": [\"string\", \"null\"] },\n            \"created_at\": { \"type\": \"string\" },\n            \"updated_at\": { \"type\": \"string\" }\n          }\n        },\n        \"token\": { \"type\": \"string\" }\n      }\n    }\n  }\n}\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/vnd.api+json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/vnd.api+json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "first_name",
+							"value": "Omar",
+							"type": "text"
+						},
+						{
+							"key": "last_name",
+							"value": "Ayman",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "omaraymn411@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "43494955_oG",
+							"type": "text"
+						},
+						{
+							"key": "password_confirmation",
+							"value": "43494955_oG",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/register",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"register"
+					]
+				},
+				"description": "### Register User\n\nThis endpoint allows the client to register a new user.\n\n#### Request Body\n\n- `first_name` (text): The first name of the user.\n    \n- `last_name` (text): The last name of the user.\n    \n- `email` (text): The email address of the user.\n    \n- `password` (text): The password for the user account.\n    \n- `password_confirmation` (text): The confirmation of the password.\n    \n\n#### Response (422 - Unprocessable Entity)\n\nThe response will be in JSON format with the following schema:\n\n``` json\n{\n    \"message\": \"string\",\n    \"errors\": {\n        \"email\": [\"string\"]\n    }\n}\n\n ```\n\n- `message` (string): A message indicating the result of the registration attempt.\n    \n- `errors.email` (array of strings): An array of error messages related to the email field."
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{SANCTUM_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/vnd.api+json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/vnd.api+json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/logout",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"logout"
+					]
+				},
+				"description": "### POST /api/logout\n\nThis endpoint is used to log out the user from the system.\n\n#### Request\n\nThe request should be sent as an HTTP POST to the specified URL. The request body should be of form-data type.\n\n#### Response\n\nThe response will have a status code of 200 and a content type of application/json. The response body will contain a JSON object with the following schema:\n\n``` json\n{\n    \"status\": \"string\",\n    \"message\": \"string\",\n    \"data\": {\n        \"message\": \"string\"\n    }\n}\n\n ```\n\nThe `status` field represents the status of the request, the `message` field provides additional information, and the `data` field contains a message regarding the logout action."
+			},
+			"response": []
+		}
+	]
+}
