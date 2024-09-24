@@ -21,7 +21,7 @@ class AuthController extends Controller
         if (!Auth::attempt($request->only('email', 'password'))) {
             return $this->error('', 'Credentials do not match', 401);
         }
-        $user =User::where('email',$request->email)->first();
+        $user = User::where('email', $request->email)->first();
         return $this->success([
             'user' => $user,
             'token' => $user->createToken('API Token of ' . $user->first_name)->plainTextToken,
@@ -48,6 +48,9 @@ class AuthController extends Controller
     }
     public function logout()
     {
-        return response()->json('This is my logout Method');
+        Auth::user()->currentAccessToken()->delete();
+        return $this->success([
+            'message' => 'You have successfully been logged out & your token has been deleted.'
+        ]);
     }
 }
